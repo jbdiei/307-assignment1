@@ -18,6 +18,9 @@ import Form from "./Form"
 
     
     }
+    function updateList(person) {
+        setCharacters([...characters, person]);
+      }
   
     return (
         <div className="container">
@@ -25,7 +28,7 @@ import Form from "./Form"
       characterData={characters}
       removeCharacter={removeOneCharacter}
     />
-        <Form />
+        <Form handleSubmit={updateList} />
   </div>
         )
     }
