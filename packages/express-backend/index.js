@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors"; 
 
+
 const app = express();
 const port =8000;
 
@@ -47,8 +48,25 @@ const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id);
 
 const addUser = (user) =>{
-    users["users_list"].push(user);
-    return user;
+    const listIds = users["users_list"].map((user)=>user["id"]);
+    let newId = user["id"];
+    if (newId===undefined){
+    while (true){
+        newId ="h"+ Math.random();
+        if (!listIds.includes(newId)){
+            break
+        }
+    }
+    
+    }
+
+    const updatedUser = {
+        "id": newId, 
+        "name": user["name"],
+        "job": user["job"] };
+    
+    users["users_list"].push(updatedUser);
+    return updatedUser;
 
 
 };
@@ -118,8 +136,17 @@ app.get("/users/:id", (req,res) => {
 
 app.post("/users", (req,res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    res.send();
+    const result = addUser(userToAdd);
+    if (result === undefined)
+    {
+        res.status(404).send("Error adding user.");
+    
+    }
+    else{
+    
+        res.status(201).send(result);
+    }
+    
 
 
 })
@@ -132,9 +159,11 @@ app.delete("/users/:id", (req,res)=>{
         res.status(404).send("Resource not found.");
     }
     else{
+
         deleteUserById(result);
+        res.status(204).send()
     }
-    res.send();
+    // res.send();
 
 
 });
