@@ -13,14 +13,49 @@ import Form from "./Form"
             return i !==index;
 
         });
+        // returns the user to delete based on the index. 
+        //can pass in the id through here
+        const userToDelete = characters.find((character,i)=> 
+        {
+          return i===index; 
+        }
+        
+        );
+        console.log(userToDelete);
+
+        deleteUser(userToDelete)
+        .then((res) => {if (res.status===204){
+          return res
+        }
+        
+        })
+        .catch((error) => {
+        console.log(error);
+        });
+
+
+        
+
+
+        //we have the index of the object, so look to get the ID of that 
+        //index then pass that through the url delete method using 
+        //the specified description 
 
         setCharacters(updated);
 
     
     }
     function updateList(person) {
-  postUser(person)
-    .then(() => setCharacters([...characters, person]))
+    postUser(person)
+    .then((res) => {if (res.status ===201)
+      {
+        return res.json();
+        }})
+        .then((newPerson) => 
+        {if(newPerson) 
+          {
+            setCharacters([...characters, newPerson]);
+            }})
     .catch((error) => {
       console.log(error);
     });
@@ -50,6 +85,19 @@ import Form from "./Form"
         body: JSON.stringify(person)
           })
       return promise ;
+    }
+
+
+    function deleteUser(person)
+    {
+      const id = person["id"];
+      const promise = fetch(`Http://localhost:8000/users/${id}`, {
+        method: 'DELETE',
+        headers: {"Content-Type": "application/json"},
+        
+          });
+      return promise ;
+    
     }
   
     return (
