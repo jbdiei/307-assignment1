@@ -90,7 +90,7 @@ import Form from "./Form"
 
     function deleteUser(person)
     {
-      const id = person["id"];
+      const id = person["_id"];
       const promise = fetch(`Http://localhost:8000/users/${id}`, {
         method: 'DELETE',
         headers: {"Content-Type": "application/json"},
