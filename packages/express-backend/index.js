@@ -17,50 +17,7 @@ const port =8000;
 
 
 
-// const findUserByName = (name) => {
-//     return users["users_list"].filter(
-//         (user) => user["name"] ===name
-//         );
 
-// };
-// const findUserById = (id) =>
-//   users["users_list"].find((user) => user["id"] === id);
-
-// const addUser = (user) =>{
-//     const listIds = users["users_list"].map((user)=>user["id"]);
-//     let newId = user["id"];
-//     if (newId===undefined){
-//     while (true){
-//         newId ="h"+ Math.random();
-//         if (!listIds.includes(newId)){
-//             break
-//         }
-//     }
-    
-//     }
-
-//     const updatedUser = {
-//         "id": newId, 
-//         "name": user["name"],
-//         "job": user["job"] };
-    
-//     users["users_list"].push(updatedUser);
-//     return updatedUser;
-
-
-// };
-
-// const deleteUserById = (id) =>{ 
-//     const index = users["users_list"].indexOf(id);
-//     users["users_list"].splice(index,1);
-
-// }
-
-// const findUserByNameAndJob = (name, job) =>{
-//     return users["users_list"].filter(
-//         (user)=>(user["name"]=== name)&& (user["job"]=== job))
-
-// }
 
 app.use(cors());
 app.use(express.json());
@@ -72,20 +29,7 @@ app.get("/", (req, res) => {
 app.get("/users", (req, res) => {
   const name = req.query.name;
   const job = req.query.job;
-//   if (name != undefined && job != undefined){
-//         let result = findUserByNameAndJob(name, job);
-//         result = {users_list: result};
-//         res.send(result);
-//   } 
-//   else if (name!=undefined && job===undefined){
-//         let result = findUserByName(name);
-//         result = {users_list: result};
-//         res.send(result);
-//   }
-//   else{
-//         res.send(users)
-        
-//     }
+
     userService.
     getUsers(name, job)
     .then((users)=>{
